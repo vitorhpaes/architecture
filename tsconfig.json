@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "alwaysStrict": true,
+    "jsx": "react",
+    "target": "es5",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "pretty": true,
+    "skipLibCheck": true,
+    "removeComments": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@app/*": ["src/*"],
+      "@components/*": ["src/components/*"],
+      "@devices/*": ["src/devices/*"],
+      "@modules/*": ["src/modules/*"],
+      "@services/*": ["src/services/*"],
+      "@state/*": ["src/state/*"],
+      "@config/*": ["config/*"],
+      "@constants/*": ["config/constants/*"],
+      "@types/*": ["config/types/*"],
+    },
+    "lib": [
+      "es2017",
+      "dom"
+    ],
+    "types": [
+      "node",
+      "react",
+    ]
+  },
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
+}

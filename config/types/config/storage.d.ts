@@ -1,0 +1,1 @@
+export type STORAGE_DIVISOR = 'authorization' | 'unity'

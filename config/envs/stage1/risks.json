@@ -1,0 +1,7 @@
+{
+    "baseAPI": "https://risks.qualyteam.com.br/api",
+    "flags": {
+        "shouldShowSomeOption": true,
+        "isEnabledSomething": true
+    }
+}

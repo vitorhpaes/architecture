@@ -1,0 +1,44 @@
+{
+    "module": "Indicators",
+    "env": "dev",
+    "url": {
+        "api": {
+            "baseurl": "http://localhost:7081/api",
+            "admin": "http://localhost:8082/api"
+        },
+        "login": "http://localhost:7080/login",
+        "Documents": "http://localhost:8080",
+        "Nonconformities": "http://localhost:9080",
+        "Indicators": "http://localhost:7080",
+        "Risks": "http://localhost:6080"
+    },
+    "cookie": {
+        "domain": "localhost"
+    },
+    "subscription": {
+        "productId": 554471,
+        "vendorId": 40430
+    },
+    "google-analytics": {
+        "token": "UA-6176561-8",
+        "options": {
+            "testMode": true,
+            "debug": false,
+            "linker:autoLink": [
+                "qualyteam.com",
+                "qualyteam.com/es",
+                "qualyteam.com/mx"
+            ]
+        }
+    },
+    "mixpanel": {
+        "token": "6ffb0582bbca8092c917b99f23e68136",
+        "enabled": false
+    },
+    "stripe": {
+        "key": "pk_test_lpYAfKwnicjgs3uBJ9Q7JwZt00e0QWatuX"
+    },
+    "user-password": {
+        "secretKey": "bQeThWmYq3t6w9z$C&F)J@NcRfUjXn2r"
+    }
+}
