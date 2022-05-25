@@ -14,5 +14,29 @@ export const useServices = () =>
         (fullContext) => fullContext.services
     )
 
+export const useRisksSDK = () =>
+    useContextSelector(
+        MultiModuleContext,
+        (fullContext) => fullContext.services.risks
+    )
+
+export const useIndicatorsSDK = () =>
+    useContextSelector(
+        MultiModuleContext,
+        (fullContext) => fullContext.services.indicators
+    )
+
+export const useDocumentsSDK = () =>
+    useContextSelector(
+        MultiModuleContext,
+        (fullContext) => fullContext.services.documents
+    )
+
+export const useNonConformitiesSDK = () =>
+    useContextSelector(
+        MultiModuleContext,
+        (fullContext) => fullContext.services.nonconformities
+    )
+
 export const useModule = () =>
     useContextSelector(MultiModuleContext, (fullContext) => fullContext.app)

@@ -43,6 +43,12 @@ module.exports = function build(env, arg) {
                     },
                 },
                 {
+                    test: /.d.ts$/,
+                    use: {
+                        loader: 'ignore-loader',
+                    },
+                },
+                {
                     test: /\.css$/,
                     use: ['style-loader', 'css-loader'],
                 },
