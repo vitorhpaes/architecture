@@ -11,7 +11,7 @@ export interface SystemPageProps {
 
 interface SystemRouteProps extends SystemPageProps {
     path: string
-    exact: boolean
+    exact?: boolean
     component: JSX.Element
 }
 
@@ -29,9 +29,6 @@ const SystemRoute: React.FC<SystemRouteProps> = ({
         hasQualyTeamIntegration,
         hasTracking,
     })
-
-    console.log(PageWithWrappers)
-
     return <Route {...props} component={() => PageWithWrappers} />
 }
 

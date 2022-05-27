@@ -1,16 +1,16 @@
-import { loadEnvironmentConfig } from '@app/driver/env'
 import React, { useMemo } from 'react'
-import Routes from './routes'
-import moduleServices from '../services/sdk'
-
 import { MultiModuleContextProvider } from '@app/components/multimodule/MultiModuleContext'
+import { loadEnvironmentConfig } from '@app/driver/env'
+import Routes from './routes'
+
+import sdk from '../services/sdk'
 const moduleConfig = loadEnvironmentConfig('risks')
 
 export default function MultiModuleProvider() {
     const app = useMemo(
         () => ({
             app: moduleConfig,
-            services: { risks: moduleServices },
+            services: sdk(moduleConfig),
         }),
         []
     )

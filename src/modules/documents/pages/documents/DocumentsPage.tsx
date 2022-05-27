@@ -1,18 +1,42 @@
+import React, { useEffect } from 'react'
 import { useDocumentsSDK } from '@app/components/multimodule/hooks'
-import React from 'react'
+import { useInView } from 'react-intersection-observer'
 
 const DocumentsPage: React.FC = () => {
     const { useDocuments } = useDocumentsSDK()
+    const { ref, inView } = useInView()
 
-    const { data: documents, isLoading } = useDocuments()
+    const {
+        data: documentsResponse,
+        fetchNextPage,
+        isSuccess,
+        isLoading,
+        isError,
+    } = useDocuments()
+
+    useEffect(() => {
+        if (!inView) return
+        fetchNextPage()
+    }, [inView])
 
     return (
         <div>
             {isLoading && <>Loading...</>}
+            {isError && <>isError</>}
             <ul>
-                {documents.map(({ id }) => (
-                    <li key={id}>{id}</li>
-                ))}
+                {isSuccess &&
+                    documentsResponse.pages.map(({ documents }) =>
+                        documents.map((document, index) => {
+                            if (documents.length - 1 !== index)
+                                return <li key={document.id}>{document.id}</li>
+
+                            return (
+                                <li key={document.id} ref={ref}>
+                                    {document.id}
+                                </li>
+                            )
+                        })
+                    )}
             </ul>
         </div>
     )

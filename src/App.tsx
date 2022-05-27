@@ -5,23 +5,30 @@ import { Provider as StoreProvider } from 'react-redux'
 import { loadByModule } from './driver/modules'
 import { store } from './state/store'
 import './App.scss'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { QueryClient, QueryClientProvider } from 'react-query'
 
 declare global {
     const POINTING_ENV: string
 }
 
 const MultiModuleProvider = loadByModule('commons/MultiModuleProvider')
+const queryClient = new QueryClient()
 
 const App: React.FC = () => {
     return (
         <StoreProvider store={store}>
-            <TranslationsIntlContainer userLanguage="en-gb">
-                <TranslationsProvider>
-                    <Suspense fallback={<>loading...</>}>
-                        <MultiModuleProvider />
-                    </Suspense>
-                </TranslationsProvider>
-            </TranslationsIntlContainer>
+            <QueryClientProvider client={queryClient}>
+                <TranslationsIntlContainer userLanguage="en-gb">
+                    <TranslationsProvider>
+                        <Suspense fallback={<>loading...</>}>
+                            <Router>
+                                <MultiModuleProvider />
+                            </Router>
+                        </Suspense>
+                    </TranslationsProvider>
+                </TranslationsIntlContainer>
+            </QueryClientProvider>
         </StoreProvider>
     )
 }

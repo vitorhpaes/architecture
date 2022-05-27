@@ -1,11 +1,11 @@
 {
     "module": "Documents",
     "env": "dev",
+    "api": {
+        "baseURL": "http://localhost:3334",
+        "admin": "http://localhost:8082/api"
+    },
     "url": {
-        "api": {
-            "baseurl": "http://localhost:8081/api",
-            "admin": "http://localhost:8082/api"
-        },
         "login": "http://localhost:8080/login",
         "Documents": "http://localhost:8080",
         "Nonconformities": "http://localhost:9080",

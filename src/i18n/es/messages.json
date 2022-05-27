@@ -173,5 +173,6 @@
     "theRiskIsClosed": "The risk you are trying to access is closed",
     "heatmapValuesWillBeDisplayedConcludedAnalysisAndEvaluation": "The heatmap values will be displayed when the Analysis and Evaluation step is completed.",
     "noDataYet": "Does not contain data yet",
-    "heatmap": "Heatmap"
+    "heatmap": "Heatmap",
+    "qualyteamCopyright": "qualyteamCopyright"
 }

@@ -23,9 +23,12 @@ export const genebraRequest = async ({
     hasToken = true,
     headers = {},
 }: GenebraRequest) => {
-    const { baseURL } = getContext()
+    const { api } = getContext()
+    const { baseURL } = api
 
-    Object.keys(defaultHeaders).map((key) => {
+    console.log(baseURL)
+
+    Object.keys(defaultHeaders).forEach((key) => {
         headers = { ...headers, key: defaultHeaders[key] }
     })
 
