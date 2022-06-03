@@ -1,9 +1,10 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { useDocumentsSDK, useModule } from '@app/components/multimodule/hooks'
 import { useAppDispatch, useAppSelector } from '@app/state/hook'
 import { setToken } from '@app/state/slices/user'
 import { useDocumentsSelector } from '../../state/hook'
 import { setExample } from '../../state/slices/example'
+import { useInView } from 'react-intersection-observer'
 
 const DocumentsPage: React.FC = () => {
     // acess module sdk
@@ -12,7 +13,7 @@ const DocumentsPage: React.FC = () => {
     // const { useCurrentUser } = useSystemSDK()
 
     // use auxiliar hook for pagination
-    // const { ref, inView } = useInView()
+    const { ref, inView } = useInView()
 
     // acess application global state
     const { token } = useAppSelector(({ app }) => app.user)
@@ -36,21 +37,19 @@ const DocumentsPage: React.FC = () => {
     // using sdk query
     const {
         data: documentsResponse,
-        // fetchNextPage, -> @use-query pagination auxiliar
+        fetchNextPage, // -> @use-query pagination auxiliar
         isSuccess,
         isLoading,
     } = useDocuments()
 
+    // usage of system environment & module flags configuration
     const { flags } = useModule()
-    console.log(flags)
 
-    /* 
-    -> handle pagination effect
+    // -> handle pagination effect
     useEffect(() => {
         if (!inView) return
         fetchNextPage()
     }, [inView])
-    */
 
     return (
         <div>
@@ -81,8 +80,9 @@ const DocumentsPage: React.FC = () => {
                                 return <li key={document.id}>{document.id}</li>
 
                             return (
-                                // <li key={document.id} ref={ref}>
-                                <li key={document.id}>{document.name}</li>
+                                <li key={document.id} ref={ref}>
+                                    {document.name}
+                                </li>
                             )
                         })
                     )}
