@@ -1,7 +1,7 @@
 import { iSystemSDK } from '@app/modules/sdk'
-
+import { MODULE_NAME_CAPITALIZED } from './modules'
 export interface AppSettings {
-    module: 'Risks' | 'Indicators' | 'Nonconformities' | 'Documents'
+    module: MODULE_NAME_CAPITALIZED
     baseURL: string
     env: string
     api: {

@@ -6,7 +6,7 @@ import './App.scss'
 import { BrowserRouter as Router } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from 'react-query'
 
-// example modification
+// task 1 example rebase
 
 declare global {
     const POINTING_ENV: string

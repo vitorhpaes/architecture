@@ -4,7 +4,7 @@ import { IntlProvider } from 'react-intl'
 import { getIntlConfiguration } from '@app/driver/locale'
 
 interface TranslationsIntlContainerProps {
-    userLanguage: PossibleLanguages
+    userLanguage?: PossibleLanguages
     children: React.ReactNode
 }
 

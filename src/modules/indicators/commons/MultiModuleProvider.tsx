@@ -6,8 +6,9 @@ import { store } from '../state/store'
 import { MultiModuleContextProvider } from '@app/components/multimodule/MultiModuleContext'
 import { loadEnvironmentConfig } from '@app/driver/env'
 import createSDK from '@modules/nonconformities/services/sdk'
+import { INDICATORS_MODULE } from '@config/constants/modules'
 
-const moduleConfig = loadEnvironmentConfig('indicators')
+const moduleConfig = loadEnvironmentConfig(INDICATORS_MODULE)
 
 export default function MultiModuleProvider() {
     const app = useMemo(

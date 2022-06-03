@@ -3,11 +3,12 @@ import { MultiModuleContextProvider } from '@app/components/multimodule/MultiMod
 import { loadEnvironmentConfig } from '@app/driver/env'
 import { Provider as StoreProvider } from 'react-redux'
 import createSDK from '../services/sdk'
+import { DOCUMENTS_MODULE } from '@constants/modules'
 
 import Routes from './routes'
 import { store } from '../state/store'
 
-const moduleConfig = loadEnvironmentConfig('documents')
+const moduleConfig = loadEnvironmentConfig(DOCUMENTS_MODULE)
 
 export default function MultiModuleProvider() {
     const app = useMemo(
