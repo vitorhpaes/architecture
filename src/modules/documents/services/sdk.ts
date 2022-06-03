@@ -4,9 +4,12 @@ import { useDocuments } from './queries/documents'
 
 export const services = {
     useDocuments,
+    useDocumentsProperties: () => {},
 }
 
-export default (module: AppSettings) => {
+const createSDK = (module: AppSettings) => {
     setContext(module)
     return { documents: services }
 }
+
+export default createSDK

@@ -33,6 +33,6 @@ export const userState = createSlice({
     },
 })
 
-export const { setToken, setIsLogged } = userState.actions
+export const { setToken, setIsLogged, setUser } = userState.actions
 
 export default userState.reducer

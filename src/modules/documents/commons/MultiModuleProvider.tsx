@@ -1,9 +1,11 @@
+import React, { useMemo } from 'react'
 import { MultiModuleContextProvider } from '@app/components/multimodule/MultiModuleContext'
 import { loadEnvironmentConfig } from '@app/driver/env'
-import React, { useMemo } from 'react'
-import sdk from '../services/sdk'
+import { Provider as StoreProvider } from 'react-redux'
+import createSDK from '../services/sdk'
 
 import Routes from './routes'
+import { store } from '../state/store'
 
 const moduleConfig = loadEnvironmentConfig('documents')
 
@@ -11,14 +13,16 @@ export default function MultiModuleProvider() {
     const app = useMemo(
         () => ({
             app: moduleConfig,
-            services: sdk(moduleConfig),
+            services: createSDK(moduleConfig),
         }),
         []
     )
 
     return (
-        <MultiModuleContextProvider value={app}>
-            <Routes />
-        </MultiModuleContextProvider>
+        <StoreProvider store={store}>
+            <MultiModuleContextProvider value={app}>
+                <Routes />
+            </MultiModuleContextProvider>
+        </StoreProvider>
     )
 }

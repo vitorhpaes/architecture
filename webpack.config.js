@@ -1,22 +1,39 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const CompressionPlugin = require('compression-webpack-plugin')
 const webpack = require('webpack')
 
 const path = require('path')
 
-module.exports = function build(env, arg) {
-    console.table({
-        arg,
-        env,
-    })
+const generateAnalyzisPlugin = (isAnalysing) => {
+    if (!isAnalysing) return []
+    return [
+        new BundleAnalyzerPlugin({
+            generateStatsFile: true,
+        }),
+    ]
+}
+
+module.exports = function build(env) {
+    const isProduction = process.env.NODE_ENV === 'production'
+    const isHTTPS = process.env.HTTPS === 'true' || env.HTTPS === 'true'
+    const isAnalysing = process.env.ANALYZE === 'true' || env.ANALYZE === 'true'
+
+    const analysisPlugins = generateAnalyzisPlugin(isAnalysing)
+    console.log('@Production:', isProduction ? 'yes' : 'no')
+    console.log('@Environment:', env.CONFIG_ENVIRONMENT || 'default')
+    console.log('@Analysing:', isAnalysing ? 'yes' : 'no')
+    console.log('@HTTPS:', isHTTPS ? 'yes' : 'no')
+
     const config = {
         output: {
             path: path.join(__dirname, 'dist'),
-            chunkFilename: 'chunks/[id].js',
+            filename: '[name].[contenthash].js',
             publicPath: '/',
         },
         devServer: {
             compress: true,
-            port: 5000,
+            https: isHTTPS,
             allowedHosts: [
                 'local.risks.com.br',
                 'local.documents.com.br',
@@ -24,11 +41,9 @@ module.exports = function build(env, arg) {
                 'local.indicators.com.br',
             ],
         },
-        mode: arg.mode,
         devtool: 'source-map',
         module: {
-            rules: [
-                {
+            rules: [{
                     test: /\.(js|jsx)$/,
                     exclude: /node_modules/,
                     use: {
@@ -54,8 +69,7 @@ module.exports = function build(env, arg) {
                 },
                 {
                     test: /\.scss$/,
-                    use: [
-                        {
+                    use: [{
                             loader: 'style-loader',
                         },
                         {
@@ -74,9 +88,60 @@ module.exports = function build(env, arg) {
                 filename: 'index.html',
             }),
             new webpack.DefinePlugin({
-                POINTING_ENV: JSON.stringify('default'),
+                POINTING_ENV: JSON.stringify(env.CONFIG_ENVIRONMENT),
             }),
+            ...analysisPlugins,
         ],
+        optimization: {
+            splitChunks: {
+                chunks: 'async',
+                minSize: 400000,
+                maxSize: 450000,
+
+                cacheGroups: {
+                    modules: {
+                        test: /[\\/]src[\\/]modules[\\/]/,
+                        priority: 15,
+                        reuseExistingChunk: false,
+                        enforce: true,
+                        chunks: 'async',
+                        name: (module) => {
+                            const file = module.identifier()
+
+                            const chunkName = file
+                                .split('/')
+                                .reverse()
+                                .slice(1, 4)
+                                .reverse()
+                                .join('-')
+                                .replace('-modules', isProduction ? '' : '-modules')
+
+                            return chunkName
+                        },
+                    },
+                    devices: {
+                        test: /[\\/]src[\\/]devices[\\/]/,
+                        priority: 20,
+                        reuseExistingChunk: false,
+                        enforce: true,
+                        chunks: 'async',
+                        name: (module) => {
+                            const file = module.identifier()
+
+                            const chunkName = file
+                                .split('/')
+                                .reverse()
+                                .slice(1, 3)
+                                .reverse()
+                                .join('-')
+                                .replace('-devices', isProduction ? '' : '-devices')
+
+                            return chunkName
+                        },
+                    },
+                },
+            },
+        },
         resolve: {
             modules: [path.join(__dirname, 'src'), 'node_modules'],
             extensions: ['.js', '.json', '.ts', '.tsx'],

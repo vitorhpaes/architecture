@@ -6,7 +6,9 @@ export const services = {
     useOrganizationalUnits,
 }
 
-export default (module: AppSettings) => {
+const createSDK = (module: AppSettings) => {
     setContext(module)
     return { risks: services }
 }
+
+export default createSDK

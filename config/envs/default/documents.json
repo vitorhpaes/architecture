@@ -6,11 +6,11 @@
         "admin": "http://localhost:8082/api"
     },
     "url": {
-        "login": "http://localhost:8080/login",
-        "Documents": "http://localhost:8080",
-        "Nonconformities": "http://localhost:9080",
-        "Indicators": "http://localhost:7080",
-        "Risks": "http://localhost:6080"
+        "login": "http://local.login.com.br:5000/login",
+        "Documents": "http://local.documents.com.br:5000",
+        "Nonconformities": "http://local.nonconformities.com.br:5000",
+        "Indicators": "http://local.indicators.com.br:5000",
+        "Risks": "http://local.risks.com.br:5000"
     },
     "cookie": {
         "domain": "localhost"
