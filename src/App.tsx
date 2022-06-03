@@ -18,7 +18,7 @@ const App: React.FC = () => {
         <QueryClientProvider client={queryClient}>
             <TranslationsIntlContainer userLanguage="en-gb">
                 <TranslationsProvider>
-                    <Suspense fallback={<>loading...</>}>
+                    <Suspense fallback={<></>}>
                         <Router>
                             <MultiModuleProvider />
                         </Router>

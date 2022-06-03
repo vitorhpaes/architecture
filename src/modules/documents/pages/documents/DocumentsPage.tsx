@@ -1,52 +1,74 @@
-import React, { useEffect } from 'react'
+import React, { useCallback } from 'react'
 import { useDocumentsSDK } from '@app/components/multimodule/hooks'
-import { useInView } from 'react-intersection-observer'
 import { useAppDispatch, useAppSelector } from '@app/state/hook'
 import { setToken } from '@app/state/slices/user'
 import { useDocumentsSelector } from '../../state/hook'
 import { setExample } from '../../state/slices/example'
 
 const DocumentsPage: React.FC = () => {
+    // acess module sdk
     const { useDocuments } = useDocumentsSDK()
-    const { ref, inView } = useInView()
+    // acess global system sdk (only example)
+    // const { useCurrentUser } = useSystemSDK()
 
-    const dispatch = useAppDispatch()
-    const { token } = useAppSelector((state) => state.app.user)
+    // use auxiliar hook for pagination
+    // const { ref, inView } = useInView()
 
+    // acess application global state
+    const { token } = useAppSelector(({ app }) => app.user)
+    // acess module state
     const { example } = useDocumentsSelector((state) => state.example)
 
-    const modifyToken = (newToken: string) => dispatch(setToken(newToken))
-    const modifyExample = (newExample: string) =>
-        dispatch(setExample(newExample))
+    // create dispatchers
+    const dispatch = useAppDispatch()
 
+    // current module dispatcher handler
+    const modifyExample = useCallback(
+        (newExample: string) => dispatch(setExample(newExample)),
+        []
+    )
+    // global state dispatcher handler
+    const modifyToken = useCallback(
+        (newToken: string) => dispatch(setToken(newToken)),
+        []
+    )
+
+    // using sdk query
     const {
         data: documentsResponse,
-        fetchNextPage,
+        // fetchNextPage, -> @use-query pagination auxiliar
         isSuccess,
         isLoading,
     } = useDocuments()
 
+    /* 
+    -> handle pagination effect
     useEffect(() => {
         if (!inView) return
         fetchNextPage()
     }, [inView])
+    */
 
     return (
         <div>
             {isLoading && <>Loading...</>}
 
             <ul>
+                {/* example usage global application state from layout */}
                 <li>userToken: {JSON.stringify(token)}</li>
-                <button onClick={() => modifyToken(`${token}123`)}>
-                    token
+                <button onClick={() => modifyToken(`${token} + example`)}>
+                    change token
                 </button>
+
+                {/* example usage module application state from layout */}
                 <li>documentsStateExample: {example}</li>
                 <button onClick={() => modifyExample(`${example} + example`)}>
-                    example
+                    change module state
                 </button>
             </ul>
 
             <ul>
+                {/* query auxiliars usage (using pagination) */}
                 {isSuccess &&
                     documentsResponse.pages.map(({ documents }) =>
                         documents.map((document, index) => {
@@ -54,12 +76,14 @@ const DocumentsPage: React.FC = () => {
                                 return <li key={document.id}>{document.id}</li>
 
                             return (
-                                <li key={document.id} ref={ref}>
-                                    {document.name}
-                                </li>
+                                // <li key={document.id} ref={ref}>
+                                <li key={document.id}>{document.name}</li>
                             )
                         })
                     )}
+
+                {/* query auxiliars usage (not using pagination) */}
+                {/* {isSuccess && documents.map((document, index) => <li key={document.uuid}>{document.name}</li>)} */}
             </ul>
         </div>
     )

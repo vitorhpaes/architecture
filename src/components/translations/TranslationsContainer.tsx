@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { PossibleLanguages } from '@app/i18n'
 import { IntlProvider } from 'react-intl'
-import { getIntlConfiguration } from './helper'
+import { getIntlConfiguration } from '@app/driver/locale'
 
 interface TranslationsIntlContainerProps {
     userLanguage: PossibleLanguages
