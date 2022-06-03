@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useDocumentsSDK } from '@app/components/multimodule/hooks'
+import { useDocumentsSDK, useModule } from '@app/components/multimodule/hooks'
 import { useAppDispatch, useAppSelector } from '@app/state/hook'
 import { setToken } from '@app/state/slices/user'
 import { useDocumentsSelector } from '../../state/hook'
@@ -41,6 +41,9 @@ const DocumentsPage: React.FC = () => {
         isLoading,
     } = useDocuments()
 
+    const { flags } = useModule()
+    console.log(flags)
+
     /* 
     -> handle pagination effect
     useEffect(() => {
@@ -52,6 +55,8 @@ const DocumentsPage: React.FC = () => {
     return (
         <div>
             {isLoading && <>Loading...</>}
+
+            {flags.shouldShowFlagsExample && <>Flags - Example</>}
 
             <ul>
                 {/* example usage global application state from layout */}

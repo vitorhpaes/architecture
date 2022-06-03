@@ -42,6 +42,6 @@
         "secretKey": "bQeThWmYq3t6w9z$C&F)J@NcRfUjXn2r"
     },
     "flags": {
-        "shouldShowFlagsExample": false
+        "shouldShowFlagsExample": true
     }
 }

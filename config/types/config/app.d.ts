@@ -8,6 +8,9 @@ export interface AppSettings {
         baseURL: string
         admin: string
     }
+    flags: {
+        [key: string]: string
+    }
     url: {
         login: string
         Documents: string
